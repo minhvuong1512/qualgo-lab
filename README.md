@@ -45,6 +45,8 @@ Pre-requisites:
 - Kubernetes cluster: https://docs.k3s.io/installation
 - `kubectl` installed locally
 - Tilt installed locally: https://docs.tilt.dev/install
+- Helm
+- helmfile
 
 
 Change directory to the Docker Compose deploy directory:
