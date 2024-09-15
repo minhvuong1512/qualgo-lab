@@ -1,0 +1,11 @@
+# -*- mode: Python -*-
+
+allow_k8s_contexts(k8s_context())
+
+random_password = local("bash scripts/generate_password.sh")
+os.putenv ( 'MYSQL_PASSWORD' , random_password )
+
+docker_compose('docker-compose.yml')
+
+docker_build('frontend', '../../src/frontend')
+docker_build('nestjs-backend', '../../src/nestjs-backend')

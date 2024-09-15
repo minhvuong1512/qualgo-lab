@@ -1,0 +1,4 @@
+{{if env "RANDOM_PASSWORD" }}
+auth:
+  rootPassword: {{ env "RANDOM_PASSWORD" | default "" }}
+{{end}}

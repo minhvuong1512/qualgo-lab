@@ -1,0 +1,12 @@
+{{if env "TILT_MODE" }}
+image:
+  repository: nestjs-backend
+  tag: dev
+nameOverride: 'nestjs-backend'
+fullnameOverride: 'nestjs-backend'
+{{end}}
+
+{{if env "RANDOM_PASSWORD" }}
+env:
+    DATABASE_PASSWORD: {{ env "RANDOM_PASSWORD" | default "" }}
+{{end}}

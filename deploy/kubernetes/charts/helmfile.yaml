@@ -1,0 +1,35 @@
+releases:
+- name: "mariadb"
+  namespace: "default"
+  chart: ./mariadb
+  wait: true
+  values:
+    - auth:
+        rootPassword: "75a03cddc9dce2a0b42b"
+        username: "admin"
+        password: "75a03cddc9dce2a0b42b"
+        database: "users"
+
+          
+#  - ./values/mariadb.yaml.gotmpl  
+
+
+- name: "nestjs-backend"
+  namespace: "default"
+  chart: ./nestjs-backend
+  wait: true
+  values:
+#  - ./values/nestjs-backend.yaml.gotmpl
+    - image:
+        tag: 1
+        repository: registry.example.com:5000/nestjs-backend
+    - env:
+        DATABASE_PASSWORD: "75a03cddc9dce2a0b42b"
+
+- name: "frontend"
+  namespace: "default"
+  chart: ./nextjs
+  wait: true
+  values:
+    - web:
+        image: registry.example.com:5000/frontend:tilt-8a40a5a34dd7cd2e

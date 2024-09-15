@@ -1,0 +1,49 @@
+version: "2"
+
+services:
+  users-db:
+    image: mariadb:10.8.2
+    hostname: users-db
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - MYSQL_DATABASE=users
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    mem_limit: 128m
+
+  frontend:
+    image: frontend:${TAG:-latest}
+    hostname: frontend
+    restart: always
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid
+    ports:
+      - '3001:3000'
+    mem_limit: 128m
+    cap_drop:
+      - ALL 
+
+  nestjs-backend:
+    image: nestjs-backend:${TAG:-latest}
+    hostname: nestjs-backend
+    restart: always
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid
+    ports:
+      - '3000:3000'
+    depends_on:
+      - users-db        
+    environment:
+      - DATABASE_HOST=users-db
+      - DATABASE_PORT=3306
+      - DATABASE_USERNAME=root
+      - DATABASE_PASSWORD=${MYSQL_PASSWORD}
+      - DATABASE_NAME=users
+    mem_limit: 256m
+    cap_drop:
+      - ALL  
+
