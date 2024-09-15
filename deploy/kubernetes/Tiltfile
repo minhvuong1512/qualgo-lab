@@ -18,7 +18,7 @@ def helmfile(file):
 k8s_yaml(helmfile("charts/helmfile.yaml"))
 
 docker_build('frontend', '../../src/frontend')
-#docker_build('nestjs-backend', '../../src/nestjs-backend')
+docker_build('nestjs-backend', '../../src/nestjs-backend')
 
 
 k8s_resource('frontend-nextjs-web', port_forwards='8080:3000')
